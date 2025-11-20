@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GreenShop - Home</title>
+<style>
+/* Reset & body */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+body { background-color:#f5f5f5; padding:20px; }
+
+/* Navbar */
+.navbar {
+    display:flex; justify-content:space-between; align-items:center;
+    background-color:#2e7d32; padding:10px 20px; border-radius:10px; color:#fff;
+}
+.navbar .logo { font-size:24px; font-weight:bold; }
+.navbar .nav-links { list-style:none; display:flex; gap:20px; align-items:center; }
+.navbar .nav-links li a, .navbar .nav-links li span { text-decoration:none; color:#fff; font-weight:bold; }
+.navbar .nav-links li a:hover { color:#a5d6a7; }
+.burger { display:none; cursor:pointer; flex-direction:column; gap:5px; }
+.burger div { width:25px; height:3px; background-color:#fff; border-radius:2px; }
+@media(max-width:768px){
+    .navbar .nav-links { display:none; position:absolute; top:60px; right:20px; background-color:#2e7d32; flex-direction:column; gap:15px; padding:15px; border-radius:10px; }
+    .navbar .nav-links.active { display:flex; }
+    .burger { display:flex; }
+}
+
+/* Heading */
+h2 { text-align:center; margin:30px 0; color:#2e7d32; }
+
+/* Plant grid */
+.plant-grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap:20px; }
+.plant-card { background:#fff; border-radius:15px; padding:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); text-align:center; }
+.plant-card img { width:100%; border-radius:15px; height:200px; object-fit:cover; }
+.plant-card h3 { margin:10px 0; color:#2e7d32; }
+.plant-card p { margin:5px 0; font-weight:bold; }
+
+/* Form inside card */
+.plant-card form { display:flex; flex-direction:column; gap:10px; margin-top:10px; }
+.plant-card input[type=number] { padding:5px; border-radius:5px; border:1px solid #ccc; width:60px; margin:0 auto; }
+.plant-card button { padding:10px; background:#2e7d32; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:bold; transition:0.3s; }
+.plant-card button:hover { background:#1b5e20; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">🌿 GreenShop</div>
+  <ul class="nav-links">
+    <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('cart') }}">Cart 🛒</a></li>
+    <li><a href="{{ url_for('checkout') }}">Checkout 💳</a></li>
+
+    {% if username %}
+      <li><span>Hello, {{ username }}</span></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    {% else %}
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('register') }}">Register</a></li>
+    {% endif %}
+  </ul>
+  <div class="burger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</nav>
+
+<script>
+const burger = document.querySelector('.burger');
+const nav = document.querySelector('.nav-links');
+burger.addEventListener('click', () => { nav.classList.toggle('active'); });
+</script>
+
+<h2>Available Plants</h2>
+
+<div class="plant-grid">
+    {% for plant in plants %}
+    <div class="plant-card">
+        <img src="{{ plant.img }}" alt="{{ plant.name }}">
+        <h3>{{ plant.name }}</h3>
+        <p>₱{{ plant.price }}</p>
+        <form action="{{ url_for('add_to_cart') }}" method="POST">
+            <input type="number" name="quantity" min="1" value="1">
+            <input type="hidden" name="plant_id" value="{{ plant.id }}">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

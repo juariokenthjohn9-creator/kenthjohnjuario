@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Plant Shop – Inventory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f5f7fa;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        background: #2d6a4f;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+    }
+    .navbar a {
+        color: white;
+        margin-right: 20px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    /* PAGE HEADER */
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+        color: #1b4332;
+    }
+
+    /* GRID */
+    .container {
+        width: 90%;
+        margin: 30px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-gap: 25px;
+    }
+
+    /* PRODUCT CARD */
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: 0.2s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+    .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    .card h3 {
+        margin: 10px 0 5px 0;
+        color: #2d6a4f;
+    }
+    .price {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #1b4332;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 15px;
+        background: #40916c;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: 0.2s;
+    }
+    .btn:hover {
+        background: #2d6a4f;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-left">
+        <strong>Plant Shop</strong>
+    </div>
+    <div class="nav-right">
+        <a href="/">Home</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/cart">Cart</a>
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+    </div>
+</div>
+
+<h1>Available Plants</h1>
+
+<!-- GRID OF PRODUCTS -->
+<div class="container">
+
+    <!-- Example product card -->
+    <div class="card">
+        <img src="static/monstera.jpg" alt="Monstera Deliciosa">
+        <h3>Monstera Deliciosa</h3>
+        <p class="price">₹350</p>
+        <a class="btn" href="/add_to_cart/1">Add to Cart</a>
+    </div>
+
+    <div class="card">
+        <img src="static/snakeplant.jpg" alt="Snake Plant">
+        <h3>Snake Plant</h3>
+        <p class="price">₹280</p>
+        <a class="btn" href="/add_to_cart/2">Add to Cart</a>
+    </div>
+
+    <div class="card">
+        <img src="static/aloevera.jpg" alt="Aloe Vera">
+        <h3>Aloe Vera</h3>
+        <p class="price">₹220</p>
+        <a class="btn" href="/add_to_cart/3">Add to Cart</a>
+    </div>
+
+    <div class="card">
+        <img src="static/peacelily.jpg" alt="Peace Lily">
+        <h3>Peace Lily</h3>
+        <p class="price">₹300</p>
+        <a class="btn" href="/add_to_cart/4">Add to Cart</a>
+    </div>
+
+</div>
+
+</body>
+</html>
