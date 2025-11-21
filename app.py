@@ -5,9 +5,9 @@ app.secret_key = "supersecretkey"
 
 # Example inventory
 plants = [
-    {"id": 1, "name": "Monstera Deliciosa", "price": 500, "img": "plant1.jpg"},
-    {"id": 2, "name": "Fiddle Leaf Fig", "price": 700, "img": "plant2.jpg"},
-    {"id": 3, "name": "Snake Plant", "price": 300, "img": "plant3.jpg"}
+    {"id": 1, "name": "Monstera Deliciosa", "price": 500, "img": "Monstera Deliciosa.jpg"},
+    {"id": 2, "name": "Fiddle Leaf Fig", "price": 700, "img": "Fiddle Leaf Fig.jpg"},
+    {"id": 3, "name": "Snake Plant", "price": 300, "img": "Snake Plant.jpg"}
 ]
 
 # Simple in-memory user storage
@@ -118,7 +118,7 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
         if username in users and users[username] == password:
-            session["username"] = username
+            session["username"] = username 
             flash(f"Welcome {username}!")
             return redirect(url_for("home"))
         else:
@@ -133,4 +133,9 @@ def logout():
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    try:
+        print("Starting Flask server...")
+        app.run(debug=True, host='127.0.0.1', port=5000)
+    except Exception as e:
+        print(f"Error starting server: {e}")
+        print("Make sure Flask is installed: pip install flask")

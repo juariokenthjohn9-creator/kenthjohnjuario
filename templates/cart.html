@@ -51,6 +51,16 @@ h2 { text-align: center; margin: 30px 0; color: #2e7d32; }
 
 /* Grand total */
 .grand-total { text-align: center; margin-top: 20px; font-size: 22px; color: #2e7d32; font-weight: bold; }
+
+/* Table styles */
+table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+th { background-color: #4CAF50; color: white; }
+.total { font-size: 20px; font-weight: bold; margin: 20px 0; }
+button { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; }
+button:hover { background-color: #45a049; }
+.remove-btn { background-color: #e74c3c; padding: 5px 10px; font-size: 12px; }
+.remove-btn:hover { background-color: #c0392b; }
 </style>
 </head>
 <body>
@@ -72,34 +82,47 @@ h2 { text-align: center; margin: 30px 0; color: #2e7d32; }
 </nav>
 </header>
 
-<h2>🛒 Your Cart</h2>
+<div class="container">
+    <h2>🛒 Your Cart</h2>
 
-<div class="top-links">
-    <a href="{{ url_for('home') }}">🏡 Continue Shopping</a>
-    <a href="{{ url_for('checkout') }}">💳 Checkout</a>
-</div>
-
-<div class="cart-grid">
-    {% for item in cart %}
-    <div class="cart-card">
-        <img src="{{ url_for('static', filename=item.img) }}" alt="{{ item.name }}">
-        <h3>{{ item.name }}</h3>
-        <p>₱{{ item.price }}</p>
-        <form action="{{ url_for('update_cart') }}" method="POST">
-            <input type="number" name="{{ item.id }}" value="{{ item.qty }}" min="1">
-            <br>
-            <button type="submit">Update Qty</button>
-        </form>
-        <form action="{{ url_for('remove_item', plant_id=item.id) }}" method="GET">
-            <button type="submit" class="remove-btn">Remove</button>
-        </form>
-        <p style="margin-top:10px; font-weight:bold;">Total: ₱{{ item.price * item.qty }}</p>
+    <div class="top-links">
+        <a href="{{ url_for('home') }}">🏡 Continue Shopping</a>
+        <a href="{{ url_for('checkout') }}">💳 Checkout</a>
     </div>
-    {% endfor %}
-</div>
 
-<div class="grand-total">
-    Grand Total: ₱{{ total }}
+    {% if cart and cart|length > 0 %}
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        {% for item in cart %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>₱{{ item.price }}</td>
+                <td>
+                    <form action="{{ url_for('update_cart') }}" method="POST" style="display:inline;">
+                        <input type="number" name="{{ item.id }}" value="{{ item.qty }}" min="1" style="width: 50px;">
+                </td>
+                <td>₱{{ item.price * item.qty }}</td>
+                <td>
+                    <a href="{{ url_for('remove_item', plant_id=item.id) }}" class="remove-btn" style="text-decoration: none; color: white;">Remove</a>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div class="total">
+        Grand Total: ₱{{ total }}
+    </div>
+    <a href="{{ url_for('checkout') }}"><button>Proceed to Checkout</button></a>
+    {% else %}
+        <p>Your cart is empty. <a href="{{ url_for('home') }}">Continue shopping</a></p>
+    {% endif %}
 </div>
 
 <script>
